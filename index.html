@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KickOff Tickets — Kenya Football</title>
+<style>
+:root{--bg:#0a0e1a;--surface:#121826;--surface2:#1a2235;--border:#263047;--green:#00e676;--green-dark:#00b85a;--gold:#ffc107;--red:#ff4757;--text:#eaf0ff;--muted:#8a97b5}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+button{font-family:inherit;cursor:pointer;border:0}input{font-family:inherit}a{color:inherit;text-decoration:none}
+nav{position:sticky;top:0;z-index:50;background:rgba(10,14,26,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:center;gap:.6rem;font-weight:800;font-size:1.25rem}.logo-icon{width:36px;height:36px;border-radius:50%;background:var(--green);display:grid;place-items:center;font-size:1.2rem;box-shadow:0 0 20px rgba(0,230,118,.4)}.logo span{color:var(--green)}
+.nav-right{display:flex;gap:1rem;align-items:center;font-size:.9rem}.nav-right a:hover{color:var(--green)}
+.hero{position:relative;padding:4rem 1.5rem 5rem;text-align:center;background:linear-gradient(135deg,rgba(10,14,26,.95),rgba(10,14,26,.6)),url('https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1600&q=80') center/cover;overflow:hidden}
+.hero:after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(0,230,118,.15),transparent 60%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:900px;margin:auto}.badge{display:inline-block;padding:.35rem 1rem;background:rgba(0,230,118,.12);color:var(--green);border-radius:50px;font-size:.8rem;font-weight:700;letter-spacing:1px;margin-bottom:1rem;border:1px solid rgba(0,230,118,.3)}
+.hero h1{font-size:clamp(2rem,6vw,4rem);font-weight:900;line-height:1.1;margin-bottom:1rem;letter-spacing:-1px}.hero h1 span{background:linear-gradient(135deg,var(--green),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.hero p{color:var(--muted);font-size:1.1rem;max-width:600px;margin:auto}
+.container{max-width:1200px;margin:auto;padding:3rem 1.5rem}.section-title{font-size:1.75rem;font-weight:800;margin-bottom:.4rem}.section-title span{color:var(--green)}.section-sub{color:var(--muted);margin-bottom:2rem}
+.fixtures{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.fixture{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:.25s;cursor:pointer;display:flex;flex-direction:column}.fixture:hover{transform:translateY(-4px);border-color:var(--green);box-shadow:0 20px 40px rgba(0,230,118,.15)}
+.fixture-img{height:180px;background-size:cover;background-position:center;position:relative}.league-tag{position:absolute;top:12px;left:12px;background:rgba(10,14,26,.85);color:var(--green);padding:.3rem .8rem;border-radius:50px;font-size:.7rem;font-weight:700;border:1px solid rgba(0,230,118,.3)}
+.fixture-body{padding:1.25rem;flex:1;display:flex;flex-direction:column}.teams{font-size:1.15rem;font-weight:800;margin-bottom:.4rem}.teams .vs{color:var(--green);font-size:.85rem;margin:0 .4rem}.meta{color:var(--muted);font-size:.85rem;margin-bottom:1rem}.meta div{display:flex;gap:.4rem;align-items:center;margin-bottom:.2rem}
+.price-row{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border);margin-top:auto}.from{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}.price{color:var(--green);font-size:1.35rem;font-weight:900}
+.btn{padding:.7rem 1.25rem;border-radius:10px;font-weight:700;font-size:.9rem;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:.4rem}.btn-primary{background:var(--green);color:#041510}.btn-primary:hover{background:var(--green-dark);transform:translateY(-1px)}.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}.btn-ghost:hover{border-color:var(--green);color:var(--green)}.btn:disabled{opacity:.5;cursor:not-allowed}
+.overlay{position:fixed;inset:0;background:rgba(4,8,16,.85);backdrop-filter:blur(8px);display:none;justify-content:center;align-items:center;z-index:100;padding:1rem;overflow-y:auto}.overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;max-width:640px;width:100%;max-height:92vh;overflow-y:auto;position:relative;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.close-x{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;background:rgba(10,14,26,.8);color:var(--text);font-size:1.2rem;z-index:3}.close-x:hover{background:var(--red);color:white}
+.modal-hero{height:180px;background-size:cover;background-position:center;position:relative}.modal-hero:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent,var(--surface))}.modal-body{padding:1.5rem}.modal-body h2{font-size:1.5rem;font-weight:800;margin-bottom:.25rem}.teams-line{color:var(--green);font-weight:700;margin-bottom:.5rem}.modal-body p.meta{margin-bottom:1.25rem}
+.cat-grid{display:grid;gap:.75rem;margin:1.5rem 0}.cat{background:var(--surface2);border:2px solid var(--border);border-radius:14px;padding:1rem 1.15rem;cursor:pointer;transition:.2s;display:flex;justify-content:space-between;align-items:center}.cat:hover{border-color:var(--green)}.cat.selected{border-color:var(--green);background:rgba(0,230,118,.08)}.cat.selected .cat-check{opacity:1;transform:scale(1)}.cat-info{flex:1}.cat-name{font-weight:800;text-transform:uppercase;letter-spacing:1px;font-size:.9rem}.cat-name.regular{color:#6ec1ff}.cat-name.vip{color:var(--gold)}.cat-name.vvip{color:#ff6ec7}.cat-desc{color:var(--muted);font-size:.8rem;margin-top:.15rem}.cat-right{text-align:right}.cat-price{color:var(--green);font-weight:900;font-size:1.15rem}.cat-stock{color:var(--muted);font-size:.75rem}.cat-stock.low{color:var(--red)}.cat-check{opacity:0;transform:scale(.5);transition:.2s;color:var(--green);font-size:1.3rem;margin-left:.5rem}
+.qty-row{display:flex;justify-content:space-between;align-items:center;background:var(--surface2);padding:.85rem 1.15rem;border-radius:12px;border:1px solid var(--border);margin-bottom:1.5rem}.qty-btns{display:flex;align-items:center;gap:.75rem}.qty-btns button{width:36px;height:36px;border-radius:8px;background:var(--bg);color:var(--text);border:1px solid var(--border);font-size:1.15rem;font-weight:700}.qty-btns button:hover{border-color:var(--green);color:var(--green)}.qty-btns button:disabled{opacity:.4;cursor:not-allowed}.qty-btns span{min-width:30px;text-align:center;font-weight:800;font-size:1.1rem}
+.form-grid{display:grid;gap:.85rem}.form-grid label{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}.form-grid input{width:100%;margin-top:.3rem;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem;font-size:.95rem;outline:none}.form-grid input:focus{border-color:var(--green)}
+.total-box{background:linear-gradient(135deg,rgba(0,230,118,.1),rgba(255,193,7,.05));border:1px solid rgba(0,230,118,.3);border-radius:14px;padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center;margin:1rem 0}.total-box .label{color:var(--muted);font-size:.85rem}.total-box .amount{color:var(--green);font-size:1.6rem;font-weight:900}.btn-full{width:100%;padding:1rem;font-size:1rem}
+.success{text-align:center;padding:2.5rem 1.5rem}.success-icon{width:80px;height:80px;border-radius:50%;background:var(--green);color:#041510;display:grid;place-items:center;font-size:2.5rem;margin:0 auto 1.5rem;box-shadow:0 0 40px rgba(0,230,118,.5);animation:pop .5s}.success h2{font-size:1.75rem;margin-bottom:.5rem}.success p{color:var(--muted);margin-bottom:1.5rem}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.ticket-code{background:var(--surface2);border:2px dashed var(--green);border-radius:12px;padding:1rem 1.5rem;font-family:monospace;font-size:1.35rem;font-weight:900;letter-spacing:2px;color:var(--green);margin:1rem 0 1.5rem;display:inline-block}
+.receipt{background:var(--surface2);border-radius:12px;padding:1rem 1.25rem;text-align:left;margin:1rem 0}.receipt-row{display:flex;justify-content:space-between;padding:.35rem 0;font-size:.9rem}.receipt-row span:first-child{color:var(--muted)}
+.toast{position:fixed;bottom:24px;right:24px;z-index:200;padding:1rem 1.5rem;border-radius:12px;background:var(--red);color:white;font-weight:700;font-size:.9rem;transform:translateY(150%);transition:transform .3s;max-width:340px}.toast.show{transform:translateY(0)}.toast.success{background:var(--green);color:#041510}
+.notice{background:rgba(255,193,7,.08);border:1px solid rgba(255,193,7,.3);color:#ffe08a;padding:.8rem 1rem;border-radius:10px;font-size:.82rem;margin:1rem 0}
+footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;color:var(--muted);font-size:.85rem}
+@media(max-width:640px){.hero{padding:2.5rem 1rem 3rem}.container{padding:2rem 1rem}.fixtures{grid-template-columns:1fr}.modal-body{padding:1.25rem}.total-box{flex-direction:column;gap:.4rem;text-align:center}nav{padding:.8rem 1rem}.nav-right{gap:.65rem;font-size:.8rem}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo"><div class="logo-icon">⚽</div><div>KickOff<span> Tickets</span></div></div>
+  <div class="nav-right"><a href="#fixtures">Fixtures</a><a href="#how">How it works</a></div>
+</nav>
+<header class="hero"><div class="hero-inner">
+  <div class="badge">🇰🇪 KENYA PREMIER FOOTBALL</div>
+  <h1>Feel the <span>Roar</span>.<br>Book Your Seat.</h1>
+  <p>Grab your tickets to Kenya's biggest football clashes. Regular, VIP and VVIP experiences — secure your place in the stands.</p>
+</div></header>
+<main class="container" id="fixtures">
+  <h2 class="section-title">Upcoming <span>Fixtures</span></h2>
+  <p class="section-sub">Choose your match and reserve your tickets</p>
+  <div class="fixtures" id="fixtureGrid"></div>
+</main>
+<main class="container" id="how" style="padding-top:0">
+  <h2 class="section-title">How It <span>Works</span></h2><p class="section-sub">Three quick steps to your seat</p>
+  <div style="display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+    <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;border-radius:14px"><div style="font-size:2rem">🎯</div><b>1. Pick your match</b><p style="color:var(--muted);font-size:.9rem">Browse upcoming fixtures and choose your category.</p></div>
+    <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;border-radius:14px"><div style="font-size:2rem">💳</div><b>2. Reserve your ticket</b><p style="color:var(--muted);font-size:.9rem">Enter your details and review your order.</p></div>
+    <div style="background:var(--surface);border:1px solid var(--border);padding:1.5rem;border-radius:14px"><div style="font-size:2rem">🎟️</div><b>3. Show your ticket</b><p style="color:var(--muted);font-size:.9rem">Keep your booking code for ticket verification.</p></div>
+  </div>
+</main>
+<footer>© <span id="year"></span> KickOff Tickets · Kenya Football</footer>
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+<script>
+/*
+  SINGLE-FILE GITHUB PAGES VERSION
+  Demo only: orders are stored in this browser using localStorage.
+  Real M-Pesa STK Push, shared inventory and secure ticket validation
+  require a hosted backend and payment-provider callback.
+*/
+const STORAGE_KEY='kickoff_tickets_demo_v1';
+const seedFixtures=[
+ {id:'g1',home_team:'Gor Mahia',away_team:'AFC Leopards',venue:'Nyayo National Stadium, Nairobi',match_date:'2027-02-14T16:00',league:'FKF Premier League',image:'https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=1200&q=80',regular_price:2500,vip_price:5000,vvip_price:10000,capacity:{regular:2000,vip:400,vvip:80}},
+ {id:'g2',home_team:'Tusker FC',away_team:'Bandari FC',venue:'Moi International Sports Centre, Kasarani',match_date:'2027-02-21T15:00',league:'FKF Premier League',image:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1200&q=80',regular_price:2500,vip_price:5000,vvip_price:10000,capacity:{regular:1800,vip:350,vvip:70}},
+ {id:'g3',home_team:'Harambee Stars',away_team:'Uganda Cranes',venue:'Kasarani Stadium, Nairobi',match_date:'2027-03-01T18:00',league:'International Friendly',image:'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=1200&q=80',regular_price:2500,vip_price:5000,vvip_price:10000,capacity:{regular:2500,vip:500,vvip:100}}
+];
+let fixtures=[],currentOrder=null;
+const ksh=n=>'KSh '+Number(n).toLocaleString('en-KE');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function readStore(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||{fixtures:seedFixtures,orders:[]}}catch(e){return{fixtures:seedFixtures,orders:[]}}}
+function saveStore(data){localStorage.setItem(STORAGE_KEY,JSON.stringify(data))}
+function init(){let data=readStore();if(!data.fixtures||!data.fixtures.length)data.fixtures=seedFixtures;if(!data.orders)data.orders=[];saveStore(data);fixtures=data.fixtures;renderFixtures();document.getElementById('year').textContent=new Date().getFullYear()}
+function orders(){return readStore().orders||[]}
+function available(fx,cat){const sold=orders().filter(o=>o.fixtureId===fx.id&&o.category===cat&&o.status==='paid').reduce((n,o)=>n+o.quantity,0);return Math.max(0,fx.capacity[cat]-sold)}
+function fmtDate(value){return new Date(value).toLocaleString('en-KE',{weekday:'short',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+function toast(message,type='error'){const el=document.getElementById('toast');el.textContent=message;el.className='toast show '+(type==='success'?'success':'');clearTimeout(el.timer);el.timer=setTimeout(()=>el.classList.remove('show'),3200)}
+function openModal(content){document.getElementById('modal').innerHTML=content;document.getElementById('overlay').classList.add('open')}
+function closeModal(){document.getElementById('overlay').classList.remove('open');currentOrder=null}
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+function renderFixtures(){
+ const grid=document.getElementById('fixtureGrid');
+ if(!fixtures.length){grid.innerHTML='<p style="color:var(--muted)">No fixtures available.</p>';return}
+ grid.innerHTML=fixtures.map(fx=>{
+  const total=available(fx,'regular')+available(fx,'vip')+available(fx,'vvip'),sold=total===0;
+  return `<article class="fixture" onclick="openBooking('${esc(fx.id)}')"><div class="fixture-img" style="background-image:url('${esc(fx.image)}')"><div class="league-tag">${esc(fx.league)}</div></div><div class="fixture-body"><div class="teams">${esc(fx.home_team)} <span class="vs">VS</span> ${esc(fx.away_team)}</div><div class="meta"><div>📅 ${fmtDate(fx.match_date)}</div><div>📍 ${esc(fx.venue)}</div></div><div class="price-row"><div><div class="from">Tickets from</div><div class="price">${ksh(fx.regular_price)}</div></div><button class="btn btn-primary" ${sold?'disabled':''} onclick="event.stopPropagation();${sold?'':'openBooking(\\''+esc(fx.id)+'\\')'}">${sold?'Sold Out':'Buy Tickets'}</button></div></div></article>`
+ }).join('')
+}
+function openBooking(id){
+ const fx=fixtures.find(f=>f.id===id);if(!fx)return;
+ currentOrder={fixture:fx,category:null,quantity:1};
+ const cats=[{id:'regular',label:'Regular',price:fx.regular_price,desc:'General seating · Great view'},{id:'vip',label:'VIP',price:fx.vip_price,desc:'Padded seats · Priority entry'},{id:'vvip',label:'VVIP',price:fx.vvip_price,desc:'Lounge access · Best view'}];
+ openModal(`<button class="close-x" onclick="closeModal()">✕</button><div class="modal-hero" style="background-image:url('${esc(fx.image)}')"></div><div class="modal-body"><h2>${esc(fx.home_team)} vs ${esc(fx.away_team)}</h2><div class="teams-line">${esc(fx.league)}</div><p class="meta">📅 ${fmtDate(fx.match_date)}<br>📍 ${esc(fx.venue)}</p><div style="font-weight:800;margin-bottom:.75rem;font-size:.9rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted)">Choose your category</div><div class="cat-grid">${cats.map(c=>{const a=available(fx,c.id);return `<div class="cat" data-cat="${c.id}" onclick="selectCategory('${c.id}')" ${a===0?'style="opacity:.4;pointer-events:none"':''}><div class="cat-info"><div class="cat-name ${c.id}">${c.label}</div><div class="cat-desc">${c.desc}</div></div><div class="cat-right"><div class="cat-price">${ksh(c.price)}</div><div class="cat-stock ${a<20?'low':''}">${a===0?'Sold out':a+' left'}</div></div><div class="cat-check">✓</div></div>`}).join('')}</div><div class="qty-row"><span style="font-weight:700">Tickets quantity</span><div class="qty-btns"><button id="minusBtn" onclick="changeQty(-1)" disabled>−</button><span id="qtyValue">1</span><button id="plusBtn" onclick="changeQty(1)">+</button></div></div><div class="form-grid"><label>Full name<input id="buyerName" type="text" placeholder="Your full name" autocomplete="name"></label><label>Phone number<input id="buyerPhone" type="tel" placeholder="07XXXXXXXX" autocomplete="tel"></label><label>Email address<input id="buyerEmail" type="email" placeholder="you@example.com" autocomplete="email"></label></div><div class="total-box"><div class="label">TOTAL AMOUNT</div><div class="amount" id="totalAmount">Choose a category</div></div><div class="notice">Demo checkout only. This page does not send an M-Pesa payment request or collect payment.</div><button class="btn btn-primary btn-full" id="checkoutBtn" onclick="createOrder()" disabled>Continue to demo checkout →</button></div>`);
+}
+function selectCategory(cat){
+ if(!currentOrder)return;currentOrder.category=cat;
+ document.querySelectorAll('.cat').forEach(el=>el.classList.toggle('selected',el.dataset.cat===cat));
+ updateTotal();
+}
+function changeQty(delta){
+ if(!currentOrder)return;const max=Math.min(10,available(currentOrder.fixture,currentOrder.category||'regular'));
+ currentOrder.quantity=Math.max(1,Math.min(max,currentOrder.quantity+delta));
+ document.getElementById('qtyValue').textContent=currentOrder.quantity;
+ document.getElementById('minusBtn').disabled=currentOrder.quantity<=1;
+ document.getElementById('plusBtn').disabled=currentOrder.quantity>=max;
+ updateTotal();
+}
+function updateTotal(){
+ if(!currentOrder)return;const cat=currentOrder.category,amount=document.getElementById('totalAmount'),button=document.getElementById('checkoutBtn');
+ if(!cat){amount.textContent='Choose a category';button.disabled=true;return}
+ const price=currentOrder.fixture[cat+'_price'];amount.textContent=ksh(price*currentOrder.quantity);button.disabled=false;
+ const max=Math.min(10,available(currentOrder.fixture,cat));document.getElementById('plusBtn').disabled=currentOrder.quantity>=max;
+}
+function createOrder(){
+ if(!currentOrder||!currentOrder.category)return;
+ const name=document.getElementById('buyerName').value.trim(),phone=document.getElementById('buyerPhone').value.trim(),email=document.getElementById('buyerEmail').value.trim();
+ if(name.length<2||!/^(\+?254|0)?[17]\d{8}$/.test(phone.replace(/\s/g,''))||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){toast('Enter a valid name, Kenyan phone number and email.');return}
+ const {fixture,category,quantity}=currentOrder;
+ if(available(fixture,category)<quantity){toast('Sorry, there are not enough tickets left.');return}
+ const unitPrice=fixture[category+'_price'],order={id:'ORD-'+Date.now().toString(36).toUpperCase(),fixtureId:fixture.id,home_team:fixture.home_team,away_team:fixture.away_team,venue:fixture.venue,match_date:fixture.match_date,category,quantity,unitPrice,total:unitPrice*quantity,buyerName:name,buyerPhone:phone,buyerEmail:email,status:'pending',createdAt:new Date().toISOString()};
+ const data=readStore();data.orders.push(order);saveStore(data);showPayment(order);
+}
+function showPayment(order){
+ openModal(`<button class="close-x" onclick="closeModal()">✕</button><div class="modal-body" style="padding:2rem"><h2>Demo checkout</h2><p class="meta">Review your booking before confirming.</p><div class="receipt"><div class="receipt-row"><span>Match</span><strong>${esc(order.home_team)} vs ${esc(order.away_team)}</strong></div><div class="receipt-row"><span>Category</span><strong>${order.category.toUpperCase()}</strong></div><div class="receipt-row"><span>Quantity</span><strong>${order.quantity}</strong></div><div class="receipt-row"><span>Buyer</span><strong>${esc(order.buyerName)}</strong></div><div class="receipt-row"><span>Phone</span><strong>${esc(order.buyerPhone)}</strong></div><div class="receipt-row"><span>Total</span><strong style="color:var(--green)">${ksh(order.total)}</strong></div></div><div class="notice">No money will be deducted. The button below simulates a successful payment for testing only.</div><button class="btn btn-primary btn-full" onclick="confirmDemo('${order.id}')">Simulate successful payment</button><button class="btn btn-ghost btn-full" style="margin-top:.7rem" onclick="closeModal()">Cancel</button></div>`);
+}
+function confirmDemo(id){
+ const data=readStore(),order=data.orders.find(o=>o.id===id);if(!order){toast('Booking not found.');return}
+ if(order.status!=='paid'){order.status='paid';order.ticketCode='KOT-'+Math.random().toString(36).slice(2,10).toUpperCase();order.paidAt=new Date().toISOString();saveStore(data)}
+ renderFixtures();showSuccess(order);
+}
+function showSuccess(order){
+ openModal(`<div class="success"><div class="success-icon">✓</div><h2>Booking confirmed!</h2><p>Your demo ticket has been generated. Keep this code safe.</p><div class="ticket-code">${order.ticketCode}</div><div class="receipt"><div class="receipt-row"><span>Match</span><strong>${esc(order.home_team)} vs ${esc(order.away_team)}</strong></div><div class="receipt-row"><span>Date</span><strong>${fmtDate(order.match_date)}</strong></div><div class="receipt-row"><span>Category</span><strong>${order.category.toUpperCase()}</strong></div><div class="receipt-row"><span>Tickets</span><strong>${order.quantity}</strong></div><div class="receipt-row"><span>Total</span><strong>${ksh(order.total)}</strong></div><div class="receipt-row"><span>Status</span><strong style="color:var(--green)">DEMO PAID</strong></div></div><button class="btn btn-primary btn-full" onclick="window.print()">Print ticket</button><button class="btn btn-ghost btn-full" style="margin-top:.7rem" onclick="closeModal()">Done</button></div>`);
+}
+function lookupTicket(){
+ const code=prompt('Enter your ticket code');if(!code)return;
+ const order=orders().find(o=>o.ticketCode===code.trim().toUpperCase());
+ if(!order){toast('Ticket code not found.');return}
+ showSuccess(order);
+}
+init();
+</script>
+</body>
+</html>
